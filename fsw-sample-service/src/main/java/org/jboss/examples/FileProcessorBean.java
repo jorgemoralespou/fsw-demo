@@ -21,6 +21,7 @@ public class FileProcessorBean extends RouteBuilder {
 				.streaming()
 				.unmarshal(csv)
 				.log("Metering for ${body.clientName}[EAN=${body.eanNumber}, METER=${body.meterNumber}] for ${body.captureMonth}: ${body.captation}")
+				.to("switchyard://CSVRecord2JPAObject")
 				.endDoTry()
 			.doCatch(Exception.class)
 				.log("There was a problem while processing the file")
