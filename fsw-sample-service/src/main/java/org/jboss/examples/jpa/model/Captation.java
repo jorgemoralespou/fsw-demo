@@ -16,19 +16,19 @@ public class Captation {
     private Long _id;
     
     @Column(name = "name")
-   	public String clientName;
+    String clientName;
 	
 	@Column(name = "meter_number")
-	public String meterNumber;
+	String meterNumber;
 	
 	@Column(name = "ean")
-	public String eanNumber;
+	String eanNumber;
 	
 	@Column(name = "month")
-	public int captureMonth;
+	int captureMonth;
 	
 	@Column(name = "captation")
-	public int captation;
+	int captation;
 
 	   /**
      * @return the _id

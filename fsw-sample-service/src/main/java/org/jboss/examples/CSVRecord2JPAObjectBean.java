@@ -15,6 +15,10 @@ public class CSVRecord2JPAObjectBean implements CSVRecord2JPAObject {
 	@Reference("StoreCaptation")
 	StoreCaptation storeService;
 	
+	@Inject
+	@Reference("CaptationJMSService")
+	CaptationJMSService jmsService;
+	
 	public void copyAndPersist(CSVMeterRecord csvRecord){
 		Captation cap = new Captation();
 		cap.setClientName(csvRecord.getClientName());
