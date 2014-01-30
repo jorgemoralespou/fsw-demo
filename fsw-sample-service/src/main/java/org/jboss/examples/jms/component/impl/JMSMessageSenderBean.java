@@ -1,8 +1,10 @@
-package org.jboss.examples;
+package org.jboss.examples.jms.component.impl;
 
 import javax.inject.Inject;
 
-import org.jboss.examples.data.csv.CSVMeterRecord;
+import org.jboss.examples.jms.component.JMSMessageSender;
+import org.jboss.examples.jms.reference.CaptationJMSService;
+import org.jboss.examples.model.CSVMeterRecord;
 import org.switchyard.component.bean.Reference;
 import org.switchyard.component.bean.Service;
 

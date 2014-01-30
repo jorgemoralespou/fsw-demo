@@ -1,10 +1,12 @@
-package org.jboss.examples;
+package org.jboss.examples.transform.component.impl;
 
 import javax.inject.Inject;
 
-import org.jboss.examples.data.csv.CSVMeterRecord;
+import org.jboss.examples.jms.reference.CaptationJMSService;
 import org.jboss.examples.jpa.StoreCaptation;
-import org.jboss.examples.jpa.model.Captation;
+import org.jboss.examples.model.CSVMeterRecord;
+import org.jboss.examples.model.Captation;
+import org.jboss.examples.transform.component.CSVRecord2JPAObject;
 import org.switchyard.component.bean.Reference;
 import org.switchyard.component.bean.Service;
 

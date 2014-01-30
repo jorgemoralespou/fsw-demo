@@ -3,20 +3,20 @@
   <sca:composite name="fsw-sample-service" targetNamespace="urn:org.jboss.examples:fsw-sample-service:1.0">
     <sca:component name="FileProcessorBean">
       <camel:implementation.camel>
-        <camel:java class="org.jboss.examples.FileProcessorBean"/>
+        <camel:java class="org.jboss.examples.csv.component.impl.FileProcessorBean"/>
       </camel:implementation.camel>
       <sca:service name="FileProcessor">
-        <sca:interface.java interface="org.jboss.examples.FileProcessor"/>
+        <sca:interface.java interface="org.jboss.examples.csv.component.FileProcessor"/>
       </sca:service>
       <sca:reference name="CSVRecord2JPAObject">
-        <sca:interface.java interface="org.jboss.examples.CSVRecord2JPAObject"/>
+        <sca:interface.java interface="org.jboss.examples.transform.component.CSVRecord2JPAObject"/>
       </sca:reference>
       <sca:reference name="JMSMessageSender">
-        <sca:interface.java interface="org.jboss.examples.JMSMessageSender"/>
+        <sca:interface.java interface="org.jboss.examples.jms.component.JMSMessageSender"/>
       </sca:reference>
     </sca:component>
     <sca:service name="FileProcessor" promote="FileProcessorBean/FileProcessor">
-      <sca:interface.java interface="org.jboss.examples.FileProcessor"/>
+      <sca:interface.java interface="org.jboss.examples.csv.component.FileProcessor"/>
       <file:binding.file name="FileProcessorEndpoint">
         <file:directory>/tmp</file:directory>
         <file:fileName>captation.csv</file:fileName>
@@ -26,9 +26,9 @@
       </file:binding.file>
     </sca:service>
     <sca:component name="CSVRecord2JPAObjectBean">
-      <bean:implementation.bean class="org.jboss.examples.CSVRecord2JPAObjectBean"/>
+      <bean:implementation.bean class="org.jboss.examples.transform.component.impl.CSVRecord2JPAObjectBean"/>
       <sca:service name="CSVRecord2JPAObject">
-        <sca:interface.java interface="org.jboss.examples.CSVRecord2JPAObject"/>
+        <sca:interface.java interface="org.jboss.examples.transform.component.CSVRecord2JPAObject"/>
       </sca:service>
       <sca:reference name="StoreCaptation">
         <sca:interface.java interface="org.jboss.examples.jpa.StoreCaptation"/>
@@ -37,14 +37,14 @@
     <sca:reference name="StoreCaptation" multiplicity="0..1" promote="CSVRecord2JPAObjectBean/StoreCaptation">
       <sca:interface.java interface="org.jboss.examples.jpa.StoreCaptation"/>
       <jpa:binding.jpa name="jpa1">
-        <jpa:entityClassName>org.jboss.examples.jpa.model.Captation</jpa:entityClassName>
+        <jpa:entityClassName>org.jboss.examples.model.Captation</jpa:entityClassName>
         <jpa:persistenceUnit>JpaSample</jpa:persistenceUnit>
         <jpa:transactionManager>#jtaTransactionManager</jpa:transactionManager>
         <jpa:produce/>
       </jpa:binding.jpa>
     </sca:reference>
     <sca:reference name="CaptationJMSService" multiplicity="0..1" promote="JMSMessageSenderBean/CaptationJMSService">
-      <sca:interface.java interface="org.jboss.examples.CaptationJMSService"/>
+      <sca:interface.java interface="org.jboss.examples.jms.reference.CaptationJMSService"/>
       <jca:binding.jca name="jca1">
         <jca:outboundConnection>
           <jca:resourceAdapter name="hornetq-ra.rar"/>
@@ -59,12 +59,12 @@
       </jca:binding.jca>
     </sca:reference>
     <sca:component name="JMSMessageSenderBean">
-      <bean:implementation.bean class="org.jboss.examples.JMSMessageSenderBean"/>
+      <bean:implementation.bean class="org.jboss.examples.jms.component.impl.JMSMessageSenderBean"/>
       <sca:service name="JMSMessageSender">
-        <sca:interface.java interface="org.jboss.examples.JMSMessageSender"/>
+        <sca:interface.java interface="org.jboss.examples.jms.component.JMSMessageSender"/>
       </sca:service>
       <sca:reference name="CaptationJMSService">
-        <sca:interface.java interface="org.jboss.examples.CaptationJMSService"/>
+        <sca:interface.java interface="org.jboss.examples.jms.reference.CaptationJMSService"/>
       </sca:reference>
     </sca:component>
   </sca:composite>

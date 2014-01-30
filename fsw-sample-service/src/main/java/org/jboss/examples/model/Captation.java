@@ -1,4 +1,4 @@
-package org.jboss.examples.jpa.model;
+package org.jboss.examples.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -75,6 +75,14 @@ public class Captation {
 
 	public void setCaptation(int captation) {
 		this.captation = captation;
+	}
+
+	@Override
+	public String toString() {
+		return "Captation [_id=" + _id + ", clientName=" + clientName
+				+ ", meterNumber=" + meterNumber + ", eanNumber=" + eanNumber
+				+ ", captureMonth=" + captureMonth + ", captation=" + captation
+				+ "]";
 	}
     
 	

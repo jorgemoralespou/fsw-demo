@@ -1,9 +1,9 @@
-package org.jboss.examples;
+package org.jboss.examples.csv.component.impl;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.spi.DataFormat;
-import org.jboss.examples.data.csv.CSVMeterRecord;
+import org.jboss.examples.model.CSVMeterRecord;
 
 public class FileProcessorBean extends RouteBuilder {
 

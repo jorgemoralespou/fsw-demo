@@ -7,7 +7,7 @@
    <persistence-unit name="JpaSample">
 
       <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
-      <class>org.jboss.examples.jpa.model.Captation</class>
+      <class>org.jboss.examples.model.Captation</class>
       <exclude-unlisted-classes>true</exclude-unlisted-classes>
       <properties>
          <!-- Properties for Hibernate -->

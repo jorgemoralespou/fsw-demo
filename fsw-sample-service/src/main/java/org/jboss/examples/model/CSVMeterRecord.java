@@ -1,4 +1,4 @@
-package org.jboss.examples.data.csv;
+package org.jboss.examples.model;
 
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
@@ -62,5 +62,12 @@ public class CSVMeterRecord {
 		this.captureMonth = captureMonth;
 	}
 	
+	@Override
+	public String toString() {
+		return "CSVMeterRecord [clientName=" + clientName + ", meterNumber="
+				+ meterNumber + ", eanNumber=" + eanNumber + ", captureMonth="
+				+ captureMonth + ", captation=" + captation + "]";
+	}
+
 	
 }
