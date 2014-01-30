@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:jpa="urn:switchyard-component-camel-jpa:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="fsw-sample-service" targetNamespace="urn:org.jboss.examples:fsw-sample-service:1.0">
+  <sca:composite name="fsw-sample-service" targetNamespace="urn:org.jboss.examples:fsw-sample-service:1.0">
+    <sca:component name="FileProcessorBean">
+      <camel:implementation.camel>
+        <camel:java class="org.jboss.examples.FileProcessorBean"/>
+      </camel:implementation.camel>
+      <sca:service name="FileProcessor">
+        <sca:interface.java interface="org.jboss.examples.FileProcessor"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="FileProcessor" promote="FileProcessorBean/FileProcessor">
+      <sca:interface.java interface="org.jboss.examples.FileProcessor"/>
+      <file:binding.file name="FileProcessorEndpoint">
+        <file:directory>/tmp</file:directory>
+        <file:fileName>captation.csv</file:fileName>
+        <file:consume>
+          <file:delete>true</file:delete>
+        </file:consume>
+      </file:binding.file>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>
