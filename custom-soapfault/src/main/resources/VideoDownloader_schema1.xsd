@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns="urn:com.example.switchyard:soap:1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:com.example.switchyard:soap:1.0">
+  <xs:complexType name="videoDetails">
+    <xs:sequence>
+      <xs:element name="timeout" type="xs:int"/>
+      <xs:element minOccurs="0" name="videoUrl" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="downloadDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="downloadPath" type="xs:string"/>
+      <xs:element name="numOfFiles" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DownloaderException" type="DownloaderException"/>
+  <xs:complexType name="DownloaderException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="download" type="download"/>
+  <xs:complexType name="download">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="videoDetails" type="videoDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="downloadResponse" type="downloadResponse"/>
+  <xs:complexType name="downloadResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="downloadDetails" type="downloadDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="listDownloadDetails" type="listDownloadDetails"/>
+  <xs:complexType name="listDownloadDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="videoDetails" type="videoDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="listDownloadDetailsResponse" type="listDownloadDetailsResponse"/>
+  <xs:complexType name="listDownloadDetailsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="downloadDetails" type="downloadDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

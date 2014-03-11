@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="VideoDownloader" targetNamespace="urn:com.example.switchyard:soap:1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:com.example.switchyard:soap:1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="urn:com.example.switchyard:soap:1.0" schemaLocation="VideoDownloader_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="listDownloadDetails">
+    <wsdl:part name="parameters" element="tns:listDownloadDetails">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DownloaderException">
+    <wsdl:part name="DownloaderException" element="tns:DownloaderException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="downloadResponse">
+    <wsdl:part name="parameters" element="tns:downloadResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="download">
+    <wsdl:part name="parameters" element="tns:download">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDownloadDetailsResponse">
+    <wsdl:part name="parameters" element="tns:listDownloadDetailsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="VideoDownloaderPortType">
+    <wsdl:operation name="download">
+      <wsdl:input name="download" message="tns:download">
+    </wsdl:input>
+      <wsdl:output name="downloadResponse" message="tns:downloadResponse">
+    </wsdl:output>
+      <wsdl:fault name="DownloaderException" message="tns:DownloaderException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listDownloadDetails">
+      <wsdl:input name="listDownloadDetails" message="tns:listDownloadDetails">
+    </wsdl:input>
+      <wsdl:output name="listDownloadDetailsResponse" message="tns:listDownloadDetailsResponse">
+    </wsdl:output>
+      <wsdl:fault name="DownloaderException" message="tns:DownloaderException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VideoDownloaderSoapBinding" type="tns:VideoDownloaderPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="download">
+      <soap:operation soapAction="download" style="document"/>
+      <wsdl:input name="download">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="downloadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DownloaderException">
+        <soap:fault name="DownloaderException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listDownloadDetails">
+      <soap:operation soapAction="listDownloadDetails" style="document"/>
+      <wsdl:input name="listDownloadDetails">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listDownloadDetailsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DownloaderException">
+        <soap:fault name="DownloaderException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VideoDownloader">
+    <wsdl:port name="VideoDownloaderPort" binding="tns:VideoDownloaderSoapBinding">
+      <soap:address location="http://localhost:8080/switchyard-soap-example/VideoDownloader"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

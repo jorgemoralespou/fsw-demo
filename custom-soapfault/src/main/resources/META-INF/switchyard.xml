@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" xmlns:transform="urn:switchyard-config:transform:1.1" name="switchyard-soap-example" targetNamespace="urn:com.example.switchyard:switchyard-soap-example:1.0">
+  <sca:composite name="switchyard-soap-example" targetNamespace="urn:com.example.switchyard:switchyard-soap-example:1.0">
+    <sca:component name="VideoDownloaderBean">
+      <bean:implementation.bean class="com.example.switchyard.soap.VideoDownloaderBean"/>
+      <sca:service name="VideoDownloader">
+        <sca:interface.java interface="com.example.switchyard.soap.VideoDownloader"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="VideoDownloaderPortType" promote="VideoDownloaderBean/VideoDownloader">
+      <sca:interface.wsdl interface="VideoDownloader.wsdl#wsdl.porttype(VideoDownloaderPortType)"/>
+      <soap:binding.soap name="soap1">
+        <soap:messageComposer class="com.example.switchyard.soap.CustomFaultMessageComposer" unwrapped="true"/>
+        <soap:wsdl>VideoDownloader.wsdl</soap:wsdl>
+        <soap:wsdlPort>VideoDownloaderPort</soap:wsdlPort>
+        <soap:contextPath>download</soap:contextPath>
+      </soap:binding.soap>
+    </sca:service>
+  </sca:composite>
+  <sy:transforms>
+    <transform:transform.jaxb from="java:com.example.switchyard.soap.model.DownloadDetails" to="{urn:com.example.switchyard:soap:1.0}downloadResponse"/>
+    <transform:transform.jaxb from="java:com.example.switchyard.soap.model.DownloadDetails" to="{urn:com.example.switchyard:soap:1.0}listDownloadDetailsResponse"/>
+    <transform:transform.jaxb from="java:com.example.switchyard.soap.model.DownloaderException" to="{urn:com.example.switchyard:soap:1.0}DownloaderException"/>
+    <transform:transform.jaxb from="{urn:com.example.switchyard:soap:1.0}download" to="java:com.example.switchyard.soap.model.VideoDetails"/>
+    <transform:transform.jaxb from="{urn:com.example.switchyard:soap:1.0}listDownloadDetails" to="java:com.example.switchyard.soap.model.VideoDetails"/>
+  </sy:transforms>
+</sy:switchyard>

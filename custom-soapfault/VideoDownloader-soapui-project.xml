@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="VideoDownloader" soapui-version="4.6.3" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="VideoDownloaderSoapBinding" type="wsdl" bindingName="{urn:com.example.switchyard:soap:1.0}VideoDownloaderSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/download/VideoDownloader?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/download/VideoDownloader?wsdl"><con:part><con:url>http://localhost:8080/download/VideoDownloader?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="VideoDownloader" targetNamespace="urn:com.example.switchyard:soap:1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:com.example.switchyard:soap:1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="urn:com.example.switchyard:soap:1.0" schemaLocation="http://localhost:8080/download/VideoDownloader?xsd=VideoDownloader_schema1.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="listDownloadDetails">
+    <wsdl:part element="tns:listDownloadDetails" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DownloaderException">
+    <wsdl:part element="tns:DownloaderException" name="DownloaderException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="downloadResponse">
+    <wsdl:part element="tns:downloadResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="download">
+    <wsdl:part element="tns:download" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDownloadDetailsResponse">
+    <wsdl:part element="tns:listDownloadDetailsResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="VideoDownloaderPortType">
+    <wsdl:operation name="download">
+      <wsdl:input message="tns:download" name="download"></wsdl:input>
+      <wsdl:output message="tns:downloadResponse" name="downloadResponse"></wsdl:output>
+      <wsdl:fault message="tns:DownloaderException" name="DownloaderException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listDownloadDetails">
+      <wsdl:input message="tns:listDownloadDetails" name="listDownloadDetails"></wsdl:input>
+      <wsdl:output message="tns:listDownloadDetailsResponse" name="listDownloadDetailsResponse"></wsdl:output>
+      <wsdl:fault message="tns:DownloaderException" name="DownloaderException"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VideoDownloaderSoapBinding" type="tns:VideoDownloaderPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="download">
+      <soap:operation soapAction="download" style="document"/>
+      <wsdl:input name="download">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="downloadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DownloaderException">
+        <soap:fault name="DownloaderException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listDownloadDetails">
+      <soap:operation soapAction="listDownloadDetails" style="document"/>
+      <wsdl:input name="listDownloadDetails">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listDownloadDetailsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DownloaderException">
+        <soap:fault name="DownloaderException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VideoDownloader">
+    <wsdl:port binding="tns:VideoDownloaderSoapBinding" name="VideoDownloaderPort">
+      <soap:address location="http://localhost:8080/download/VideoDownloader"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/download/VideoDownloader?xsd=VideoDownloader_schema1.xsd</con:url><con:content><![CDATA[<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:com.example.switchyard:soap:1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:com.example.switchyard:soap:1.0">
+  <xs:complexType name="videoDetails">
+    <xs:sequence>
+      <xs:element name="timeout" type="xs:int"/>
+      <xs:element minOccurs="0" name="videoUrl" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="downloadDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="downloadPath" type="xs:string"/>
+      <xs:element name="numOfFiles" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DownloaderException" type="DownloaderException"/>
+  <xs:complexType name="DownloaderException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="download" type="download"/>
+  <xs:complexType name="download">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="videoDetails" type="videoDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="downloadResponse" type="downloadResponse"/>
+  <xs:complexType name="downloadResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="downloadDetails" type="downloadDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="listDownloadDetails" type="listDownloadDetails"/>
+  <xs:complexType name="listDownloadDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="videoDetails" type="videoDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="listDownloadDetailsResponse" type="listDownloadDetailsResponse"/>
+  <xs:complexType name="listDownloadDetailsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="downloadDetails" type="downloadDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/download/VideoDownloader</con:endpoint></con:endpoints><con:operation isOneWay="false" action="download" name="download" bindingOperationName="download" type="Request-Response" outputName="downloadResponse" inputName="download" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/download/VideoDownloader</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:com.example.switchyard:soap:1.0">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:download>
+         <!--Optional:-->
+         <videoDetails>
+            <timeout>-1</timeout>
+            <!--Optional:-->
+            <videoUrl>?</videoUrl>
+         </videoDetails>
+      </urn:download>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="download"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="listDownloadDetails" name="listDownloadDetails" bindingOperationName="listDownloadDetails" type="Request-Response" outputName="listDownloadDetailsResponse" inputName="listDownloadDetails" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/download/VideoDownloader</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:com.example.switchyard:soap:1.0">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:listDownloadDetails>
+         <!--Optional:-->
+         <videoDetails>
+            <timeout>?</timeout>
+            <!--Optional:-->
+            <videoUrl>?</videoUrl>
+         </videoDetails>
+      </urn:listDownloadDetails>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="listDownloadDetails"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
