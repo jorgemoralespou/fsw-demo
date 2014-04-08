@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="serialization-sca-caller" targetNamespace="urn:com.example.switchyard:serialization-sca-caller:1.0">
+  <sca:composite name="serialization-sca-caller" targetNamespace="urn:com.example.switchyard:serialization-sca-caller:1.0">
+    <sca:component name="HelloWorlService">
+      <bean:implementation.bean class="com.example.switchyard.serialization_sca_caller.HelloWorldBean"/>
+      <sca:service name="HelloWorld">
+        <sca:interface.java interface="com.example.switchyard.serialization.sca.common.HelloWorld"/>
+      </sca:service>
+      <sca:reference name="CalledReferenceService">
+        <sca:interface.java interface="com.example.switchyard.serialization.sca.common.CalledReferenceService"/>
+      </sca:reference>
+    </sca:component>
+    <sca:reference name="CalledReferenceService" multiplicity="0..1" promote="HelloWorlService/CalledReferenceService">
+      <sca:interface.java interface="com.example.switchyard.serialization.sca.common.CalledReferenceService"/>
+      <sca:binding.sca sy:targetNamespace="urn:com.example.switchyard:switchyard-example:1.0" sy:target="CalledReferenceService" name="scaRef"/>
+    </sca:reference>
+    <sca:service name="HelloWorld" promote="HelloWorlService/HelloWorld">
+      <sca:interface.java interface="com.example.switchyard.serialization.sca.common.HelloWorld"/>
+      <file:binding.file name="file1">
+        <file:directory>/tmp</file:directory>
+        <file:fileName>name.txt</file:fileName>
+        <file:consume/>
+      </file:binding.file>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>
