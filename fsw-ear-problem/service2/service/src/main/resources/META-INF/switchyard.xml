@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="service2" targetNamespace="urn:org.jboss.examples.earproblem:service2:1.0">
+  <sca:composite name="service2" targetNamespace="urn:org.jboss.examples.earproblem:service2:1.0">
+    <sca:component name="MessageLoggerBean">
+      <bean:implementation.bean class="org.jboss.examples.earproblem.service2.service.impl.MessageLoggerBean"/>
+      <sca:service name="MessageLogger">
+        <sca:interface.java interface="org.jboss.examples.earproblem.service2.service.MessageLogger"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="MessageLoggerPortType" promote="MessageLoggerBean/MessageLogger">
+      <sca:interface.wsdl interface="META-INF/MessageLogger.wsdl#wsdl.porttype(MessageLoggerPortType)"/>
+      <soap:binding.soap name="soap1">
+        <soap:wsdl>META-INF/MessageLogger.wsdl</soap:wsdl>
+        <soap:wsdlPort>MessageLoggerPort</soap:wsdlPort>
+        <soap:contextPath>/logger</soap:contextPath>
+      </soap:binding.soap>
+    </sca:service>
+    <sca:service name="MessageLogger" promote="MessageLoggerBean/MessageLogger">
+      <sca:interface.java interface="org.jboss.examples.earproblem.service2.service.MessageLogger"/>
+      <sca:binding.sca name="sca_messagelogger"/>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>

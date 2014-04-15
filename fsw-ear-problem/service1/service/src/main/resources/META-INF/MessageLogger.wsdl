@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="MessageLogger" targetNamespace="org.jboss.examples.earproblem" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="org.jboss.examples.earproblem" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="org.jboss.examples.earproblem" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="org.jboss.examples.earproblem">
+  <xsd:element name="logMesssage" type="tns:logMesssage"/>
+  <xsd:complexType name="logMesssage">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="string" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="logMesssageResponse" type="tns:logMesssageResponse"/>
+  <xsd:complexType name="logMesssageResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="string" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="logMesssageResponse">
+    <wsdl:part name="parameters" element="tns:logMesssageResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logMesssage">
+    <wsdl:part name="parameters" element="tns:logMesssage">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MessageLoggerPortType">
+    <wsdl:operation name="logMesssage">
+      <wsdl:input name="logMesssage" message="tns:logMesssage">
+    </wsdl:input>
+      <wsdl:output name="logMesssageResponse" message="tns:logMesssageResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MessageLoggerSoapBinding" type="tns:MessageLoggerPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="logMesssage">
+      <soap:operation soapAction="logMesssage" style="document"/>
+      <wsdl:input name="logMesssage">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="logMesssageResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MessageLogger">
+    <wsdl:port name="MessageLoggerPort" binding="tns:MessageLoggerSoapBinding">
+      <soap:address location="http://localhost:8080/MessageLogger"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -10,5 +10,45 @@
         </parent>
         <groupId>org.jboss.examples.earproblem.service1</groupId>
         <artifactId>service1</artifactId>
-	<packaging>pom</packaging>
+	<packaging>ear</packaging>
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-ear-plugin</artifactId>
+            <version>2.9</version>
+            <configuration>
+               <filtering>true</filtering>
+               <modules>
+                  <jarModule>
+                     <groupId>org.jboss.examples.earproblem.service2</groupId>
+                     <artifactId>service</artifactId>
+                     <includeInApplicationXml>true</includeInApplicationXml>
+                  </jarModule>
+               </modules>
+               <archive>
+                  <manifestEntries>
+                     <Dependencies>deployment.org.jboss.examples.earproblem-common.jar</Dependencies>
+                  </manifestEntries>
+               </archive>
+               <fileNameMapping>no-version</fileNameMapping>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.jboss.as.plugins</groupId>
+            <artifactId>jboss-as-maven-plugin</artifactId>
+            <configuration>
+               <skip>false</skip>
+            </configuration>
+         </plugin>
+      </plugins>
+      <finalName>${project.artifactId}-service</finalName>
+   </build>
+   <dependencies>
+      <dependency>
+         <groupId>org.jboss.examples.earproblem.service2</groupId>
+         <artifactId>service</artifactId>
+         <version>${project.version}</version>
+         <scope>provided</scope>
+      </dependency>
+   </dependencies>
 </project>
