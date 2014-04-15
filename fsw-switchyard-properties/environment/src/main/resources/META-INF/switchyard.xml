@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" xmlns:transform="urn:switchyard-config:transform:1.1" name="environment" targetNamespace="urn:org.jboss.examples.sy.properties:environment:1.0">
+  <sca:composite name="environment" targetNamespace="urn:org.jboss.examples.sy.properties:environment:1.0">
+    <sca:component name="PropertiesSamplerBean">
+      <bean:implementation.bean class="com.example.environment.PropertiesSamplerBean"/>
+      <sca:service name="PropertiesSampler">
+        <sca:interface.java interface="com.example.environment.PropertiesSampler"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="PropertiesSamplerPortType" promote="PropertiesSamplerBean/PropertiesSampler">
+      <sca:interface.wsdl interface="PropertiesSampler.wsdl#wsdl.porttype(PropertiesSamplerPortType)"/>
+      <soap:binding.soap name="soap1">
+        <soap:wsdl>PropertiesSampler.wsdl</soap:wsdl>
+        <soap:wsdlPort>PropertiesSamplerPort</soap:wsdlPort>
+        <soap:contextPath>/environment</soap:contextPath>
+      </soap:binding.soap>
+    </sca:service>
+  </sca:composite>
+  <sy:transforms>
+    <transform:transform.jaxb from="java:com.example.environment.TestResponse" to="{urn:org.jboss.examples.sy.properties:environment:1.0}testResponse" contextPath="com.example.environment"/>
+    <transform:transform.jaxb from="{urn:org.jboss.examples.sy.properties:environment:1.0}testRequest" to="java:com.example.environment.TestRequest" contextPath="com.example.environment"/>
+  </sy:transforms>
+</sy:switchyard>
