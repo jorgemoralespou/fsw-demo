@@ -1,2 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="Environment-Properties" resourceRoot="" soapui-version="4.6.3" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:properties/><con:wssContainer/></con:soapui-project>
+<con:soapui-project activeEnvironment="Default" name="Environment-Properties" resourceRoot="${projectDir}" soapui-version="4.6.3" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="PropertiesSamplerSoapBinding" type="wsdl" bindingName="{urn:org.jboss.examples.sy.properties:environment:1.0}PropertiesSamplerSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/environment/PropertiesSampler?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/environment/PropertiesSampler?wsdl"><con:part><con:url>http://localhost:8080/environment/PropertiesSampler?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="PropertiesSampler" targetNamespace="urn:org.jboss.examples.sy.properties:environment:1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:org.jboss.examples.sy.properties:environment:1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema targetNamespace="urn:org.jboss.examples.sy.properties:environment:1.0" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="testRequest" type="tns:testRequest"/>
+      <xs:element name="testResponse" type="tns:testResponse"/>
+      <xs:complexType name="testRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="testResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="testResponse">
+    <wsdl:part element="tns:testResponse" name="return"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="test">
+    <wsdl:part element="tns:testRequest" name="arg0"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PropertiesSamplerPortType">
+    <wsdl:operation name="test">
+      <wsdl:input message="tns:test" name="test"></wsdl:input>
+      <wsdl:output message="tns:testResponse" name="testResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PropertiesSamplerSoapBinding" type="tns:PropertiesSamplerPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="test">
+      <soap:operation soapAction="test" style="document"/>
+      <wsdl:input name="test">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="testResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PropertiesSampler">
+    <wsdl:port binding="tns:PropertiesSamplerSoapBinding" name="PropertiesSamplerPort">
+      <soap:address location="http://localhost:8080/environment/PropertiesSampler"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/environment/PropertiesSampler</con:endpoint></con:endpoints><con:operation isOneWay="false" action="test" name="test" bindingOperationName="test" type="Request-Response" outputName="testResponse" inputName="test" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/environment/PropertiesSampler</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:org.jboss.examples.sy.properties:environment:1.0">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:testRequest>
+         <message>Hello world</message>
+      </urn:testRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="test"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
