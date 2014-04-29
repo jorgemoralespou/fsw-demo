@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="cdi-alternative-injected" targetNamespace="urn:com.example.switchyard:cdi-alternative-injected:1.0">
+  <sca:composite name="cdi-alternative-injected" targetNamespace="urn:com.example.switchyard:cdi-alternative-injected:1.0">
+    <sca:component name="LoggerServiceBean">
+      <bean:implementation.bean class="com.example.switchyard.cdi_alternative_injected.LoggerServiceBean"/>
+      <sca:service name="LoggerService">
+        <sca:interface.java interface="com.example.switchyard.cdi_alternative_injected.LoggerService"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="LoggerService" promote="LoggerServiceBean/LoggerService">
+      <sca:interface.java interface="com.example.switchyard.cdi_alternative_injected.LoggerService"/>
+      <file:binding.file name="file1">
+        <file:directory>/tmp</file:directory>
+        <file:fileName>log.txt</file:fileName>
+        <file:consume/>
+      </file:binding.file>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>
