@@ -53,15 +53,15 @@ xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLS
          <scope>test</scope>
       </dependency>
       <dependency>
-         <groupId>com.example.switchyard</groupId>
+         <groupId>com.example.switchyard.cdi-alternative</groupId>
          <artifactId>cdi-alternative-alternative</artifactId>
-         <version>0.0.1-SNAPSHOT</version>
+         <version>${project.version}</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
-         <groupId>com.example.switchyard</groupId>
+         <groupId>com.example.switchyard.cdi-alternative</groupId>
          <artifactId>cdi-alternative-common</artifactId>
-         <version>0.0.1-SNAPSHOT</version>
+         <version>${project.version}</version>
          <scope>provided</scope>
       </dependency>
    </dependencies>
@@ -71,7 +71,6 @@ xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLS
          <plugin>
             <groupId>org.switchyard</groupId>
             <artifactId>switchyard-plugin</artifactId>
-            <version>${switchyard.version}</version>
             <executions>
                <execution>
                   <goals>
