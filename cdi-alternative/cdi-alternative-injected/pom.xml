@@ -84,17 +84,6 @@ xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLS
                </scannerClassNames>
             </configuration>
          </plugin>
-         <plugin>
-            <artifactId>maven-jar-plugin</artifactId>
-            <configuration>
-               <archive>
-                  <manifestEntries>
-                     <Dependencies>
-                     deployment.cdi-alternative-common.jar,deployment.cdi-alternative-alternative.jar</Dependencies>
-                  </manifestEntries>
-               </archive>
-            </configuration>
-         </plugin>
       </plugins>
    </build>
 </project>
