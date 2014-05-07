@@ -11,5 +11,15 @@
       <sca:interface.java interface="com.example.switchyard.serialization.sca.common.CalledReferenceService"/>
       <sca:binding.sca name="scaSvc"/>
     </sca:service>
+    <sca:component name="RemoteInvocationWithGenericsBean">
+      <bean:implementation.bean class="com.example.switchyard.serialization.RemoteInvocationWithGenericsBean"/>
+      <sca:service name="RemoteInvocationWithGenerics">
+        <sca:interface.java interface="com.example.switchyard.serialization.sca.common.RemoteInvocationWithGenerics"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="RemoteInvocationWithGenerics" promote="RemoteInvocationWithGenericsBean/RemoteInvocationWithGenerics">
+      <sca:interface.java interface="com.example.switchyard.serialization.sca.common.RemoteInvocationWithGenerics"/>
+      <sca:binding.sca name="sca1"/>
+    </sca:service>
   </sca:composite>
 </sy:switchyard>

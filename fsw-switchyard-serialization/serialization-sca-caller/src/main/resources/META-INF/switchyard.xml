@@ -17,8 +17,15 @@
     <sca:service name="HelloWorld" promote="HelloWorlService/HelloWorld">
       <sca:interface.java interface="com.example.switchyard.serialization.sca.common.HelloWorld"/>
       <file:binding.file name="file1">
+        <sy:operationSelector operationName="sayHello"/>
         <file:directory>/tmp</file:directory>
         <file:fileName>name.txt</file:fileName>
+        <file:consume/>
+      </file:binding.file>
+      <file:binding.file name="file2">
+        <sy:operationSelector operationName="testSCAArgumentError"/>
+        <file:directory>/tmp</file:directory>
+        <file:fileName>sca.txt</file:fileName>
         <file:consume/>
       </file:binding.file>
     </sca:service>

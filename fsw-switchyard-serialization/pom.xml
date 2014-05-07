@@ -12,4 +12,24 @@
       <module>serialization-sca-callee</module>
       <module>serialization-sca-caller</module>
    </modules>
+   <build>
+   <pluginManagement>
+      <plugins>
+				<plugin>
+					<groupId>org.jboss.as.plugins</groupId>
+					<artifactId>jboss-as-maven-plugin</artifactId>
+					<version>7.5.Final</version>
+					<configuration>
+					    <hostname>localhost</hostname>
+						<port>9999</port>
+						<username>admin</username>
+						<password>admin123!</password>
+					    <ignoreMissingDeployment>true</ignoreMissingDeployment>
+                                            <skip>true</skip>
+					</configuration>
+				</plugin>
+
+      </plugins>
+   </pluginManagement>
+   </build>
 </project>

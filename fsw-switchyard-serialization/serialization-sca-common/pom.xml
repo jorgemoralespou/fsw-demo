@@ -10,5 +10,14 @@
 	<artifactId>serialization-sca-common</artifactId>
 	<build>
 		<finalName>common-model</finalName>
+                <plugins>
+                        <plugin>
+                                <groupId>org.jboss.as.plugins</groupId>
+                                <artifactId>jboss-as-maven-plugin</artifactId>
+                                <configuration>
+                                        <skip>false</skip>
+                                </configuration>
+                        </plugin>
+                </plugins>
 	</build>
 </project>
