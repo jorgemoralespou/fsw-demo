@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:quartz="urn:switchyard-component-camel-quartz:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="bindy-example" targetNamespace="urn:com.example.switchyard:bindy:unmarshal:error:1.0">
+  <sca:composite name="bindy-example" targetNamespace="urn:com.example.switchyard:bindy:unmarshal:error:1.0">
+    <sca:component name="Component">
+      <bean:implementation.bean class="com.example.switchyard.bindy.CreateObjectBean"/>
+      <sca:service name="CreateObject">
+        <sca:interface.java interface="com.example.switchyard.bindy.CreateObject"/>
+      </sca:service>
+      <sca:reference name="BindyComponentService">
+        <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      </sca:reference>
+    </sca:component>
+    <sca:component name="Component1">
+      <camel:implementation.camel>
+        <camel:java class="com.example.switchyard.bindy.CamelServiceRoute"/>
+      </camel:implementation.camel>
+      <sca:reference name="BindyComponentReference">
+        <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      </sca:reference>
+      <sca:service name="BindyComponentService">
+        <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      </sca:service>
+    </sca:component>
+    <sca:reference name="BindyCompositeReference" multiplicity="0..1" promote="Component1/BindyComponentReference">
+      <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      <file:binding.file name="file1">
+        <file:directory>/tmp</file:directory>
+        <file:fileName>marshal3</file:fileName>
+        <file:produce>
+          <file:fileExist>Append</file:fileExist>
+        </file:produce>
+      </file:binding.file>
+    </sca:reference>
+    <sca:service name="CreateObjectCompositeReference" promote="Component/CreateObject">
+      <sca:interface.java interface="com.example.switchyard.bindy.CreateObject"/>
+      <quartz:binding.quartz name="bindy-example">
+        <sy:operationSelector operationName="create"/>
+        <quartz:name>bindy-example</quartz:name>
+        <quartz:cron>* 0/1 * * * ?</quartz:cron>
+      </quartz:binding.quartz>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>
