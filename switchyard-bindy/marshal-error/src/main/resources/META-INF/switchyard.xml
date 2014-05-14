@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="bindy-example" targetNamespace="urn:com.example.switchyard:bindy:error:1.0">
+  <sca:composite name="bindy-example" targetNamespace="urn:com.example.switchyard:bindy:error:1.0">
+    <sca:component name="CamelServiceRoute">
+      <camel:implementation.camel>
+        <camel:java class="com.example.switchyard.bindy.CamelServiceRoute"/>
+      </camel:implementation.camel>
+      <sca:service name="BindyService">
+        <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      </sca:service>
+      <sca:reference name="BindyReference">
+        <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      </sca:reference>
+    </sca:component>
+    <sca:service name="BindyService" promote="CamelServiceRoute/BindyService">
+      <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      <file:binding.file name="file1">
+        <sy:operationSelector operationName="bind"/>
+        <file:directory>/tmp</file:directory>
+        <file:fileName>csv2</file:fileName>
+        <file:consume/>
+      </file:binding.file>
+    </sca:service>
+    <sca:reference name="BindyReference" multiplicity="0..1" promote="CamelServiceRoute/BindyReference">
+      <sca:interface.java interface="com.example.switchyard.bindy.Bindy"/>
+      <file:binding.file name="file1">
+        <file:directory>/tmp</file:directory>
+        <file:fileName>marshal2</file:fileName>
+        <file:produce>
+          <file:fileExist>Append</file:fileExist>
+        </file:produce>
+      </file:binding.file>
+    </sca:reference>
+  </sca:composite>
+</sy:switchyard>
