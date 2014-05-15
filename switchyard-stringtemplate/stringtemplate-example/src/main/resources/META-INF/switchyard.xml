@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:quartz="urn:switchyard-component-camel-quartz:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="bindy-example" targetNamespace="urn:com.example.switchyard:stringtemplate:example:1.0">
+  <sca:composite name="bindy-example" targetNamespace="urn:com.example.switchyard:stringtemplate:example:1.0">
+    <sca:component name="LogRoute">
+      <camel:implementation.camel>
+        <camel:java class="com.example.switchyard.stringtemplate.LogRoute"/>
+      </camel:implementation.camel>
+      <sca:service name="Log">
+        <sca:interface.java interface="com.example.switchyard.stringtemplate.Log"/>
+      </sca:service>
+      <sca:reference name="LogReference">
+        <sca:interface.java interface="com.example.switchyard.stringtemplate.Log"/>
+      </sca:reference>
+    </sca:component>
+    <sca:service name="Log" promote="LogRoute/Log">
+      <sca:interface.java interface="com.example.switchyard.stringtemplate.Log"/>
+      <file:binding.file name="file1">
+        <sy:operationSelector operationName="log"/>
+        <file:directory>/tmp</file:directory>
+        <file:fileName>input</file:fileName>
+        <file:consume/>
+      </file:binding.file>
+    </sca:service>
+    <sca:reference name="LogReference" multiplicity="0..1" promote="LogRoute/LogReference">
+      <sca:interface.java interface="com.example.switchyard.stringtemplate.Log"/>
+      <file:binding.file name="file1">
+        <file:directory>/tmp</file:directory>
+        <file:fileName>output</file:fileName>
+        <file:produce/>
+      </file:binding.file>
+    </sca:reference>
+  </sca:composite>
+</sy:switchyard>
