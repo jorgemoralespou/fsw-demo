@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:quartz="urn:switchyard-component-camel-quartz:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" xmlns:transform="urn:switchyard-config:transform:1.1" name="stringtemplate-soap-caller" targetNamespace="urn:com.example.switchyard:stringtemplate:example:1.0">
+  <sca:composite name="stringtemplate-soap-caller" targetNamespace="urn:com.example.switchyard:stringtemplate:example:1.0">
+    <sca:component name="StringtemplateExampleBean">
+      <bean:implementation.bean class="com.example.switchyard.stringtemplate.StringtemplateExampleBean"/>
+      <sca:service name="StringtemplateExample">
+        <sca:interface.java interface="com.example.switchyard.stringtemplate.StringtemplateExample"/>
+      </sca:service>
+      <sca:reference name="Log">
+        <sca:interface.java interface="com.example.switchyard.stringtemplate.Log"/>
+      </sca:reference>
+    </sca:component>
+    <sca:reference name="Log" multiplicity="0..1" promote="StringtemplateExampleBean/Log">
+      <sca:interface.java interface="com.example.switchyard.stringtemplate.Log"/>
+      <sca:binding.sca sy:targetNamespace="urn:com.example.switchyard:stringtemplate:example:1.0" sy:target="Log" name="sca1"/>
+    </sca:reference>
+    <sca:service name="StringtemplateExample" promote="StringtemplateExampleBean/StringtemplateExample">
+      <sca:interface.wsdl interface="StringtemplateExample.wsdl#wsdl.porttype(StringtemplateExamplePortType)"/>
+      <soap:binding.soap name="soap1">
+        <soap:wsdl>StringtemplateExample.wsdl</soap:wsdl>
+        <soap:wsdlPort>StringtemplateExamplePort</soap:wsdlPort>
+        <soap:contextPath>/stringtemplate</soap:contextPath>
+      </soap:binding.soap>
+    </sca:service>
+  </sca:composite>
+  <sy:transforms>
+    <transform:transform.jaxb from="java:com.example.switchyard.stringtemplate.LogResponse" to="{urn:com.example.switchyard:stringtemplate:example:1.0}logResponse"/>
+    <transform:transform.jaxb from="{urn:com.example.switchyard:stringtemplate:example:1.0}logRequest" to="java:com.example.switchyard.stringtemplate.LogRequest"/>
+  </sy:transforms>
+</sy:switchyard>

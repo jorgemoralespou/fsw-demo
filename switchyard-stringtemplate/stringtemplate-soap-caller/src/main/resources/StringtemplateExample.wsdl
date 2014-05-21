@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="StringtemplateExample" targetNamespace="urn:com.example.switchyard:stringtemplate:example:1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:com.example.switchyard:stringtemplate:example:1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:com.example.switchyard:stringtemplate:example:1.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:com.example.switchyard:stringtemplate:example:1.0">
+  <xsd:element name="logRequest" type="tns:logRequest"/>
+  <xsd:complexType name="logRequest">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="string" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="logResponse" type="tns:logResponse"/>
+  <xsd:complexType name="logResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="string" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="logRequest">
+    <wsdl:part name="parameters" element="tns:logRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logResponse">
+    <wsdl:part name="parameters" element="tns:logResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="StringtemplateExamplePortType">
+    <wsdl:operation name="log">
+      <wsdl:input name="logRequest" message="tns:logRequest">
+    </wsdl:input>
+      <wsdl:output name="logResponse" message="tns:logResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StringtemplateExampleSoapBinding" type="tns:StringtemplateExamplePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="log">
+      <soap:operation soapAction="log" style="document"/>
+      <wsdl:input name="logRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="logResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StringtemplateExample">
+    <wsdl:port name="StringtemplateExamplePort" binding="tns:StringtemplateExampleSoapBinding">
+      <soap:address location="http://localhost:8080/stringtemplate-soap-caller/StringtemplateExample"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

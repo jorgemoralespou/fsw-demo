@@ -9,8 +9,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.example.switchyard.stringtemplate</groupId>
-	<artifactId>stringtemplate-example</artifactId>
-	<name>Stringtemplate example project</name>
+	<artifactId>stringtemplate-soap-caller</artifactId>
+	<name>Stringtemplate soap caller project</name>
 	<dependencies>
 		<dependency>
 			<groupId>com.example.switchyard.stringtemplate</groupId>
@@ -23,6 +23,11 @@
 			<artifactId>switchyard-component-sca</artifactId>
 			<version>${switchyard.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.switchyard.components</groupId>
+			<artifactId>switchyard-component-soap</artifactId>
+			<version>${switchyard.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -33,5 +38,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
