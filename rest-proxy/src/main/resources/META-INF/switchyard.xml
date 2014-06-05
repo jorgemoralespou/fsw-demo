@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:http="urn:switchyard-component-http:config:1.1" xmlns:resteasy="urn:switchyard-component-resteasy:config:1.1" xmlns:rules="urn:switchyard-component-rules:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="rest-proxy" targetNamespace="urn:com.example.switchyard:rest-proxy:1.0">
+  <sca:composite name="rest-proxy" targetNamespace="urn:com.example.switchyard:rest-proxy:1.0">
+    <sca:component name="ProxyServiceBean">
+      <bean:implementation.bean class="com.example.switchyard.restproxy.services.impl.ProxyServiceBean"/>
+      <sca:service name="ProxyService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.services.ProxyService"/>
+      </sca:service>
+      <sca:reference name="AccessValidationRulesService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.services.AccessValidationRulesService"/>
+      </sca:reference>
+      <sca:reference name="DataVirtService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.services.ProxyService"/>
+      </sca:reference>
+    </sca:component>
+    <sca:component name="RulesComponent">
+      <rules:implementation.rules>
+        <rules:manifest>
+          <rules:resources>
+            <rules:resource location="RulesComponent.drl" type="DRL"/>
+          </rules:resources>
+        </rules:manifest>
+      </rules:implementation.rules>
+      <sca:service name="AccessValidationRulesService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.services.AccessValidationRulesService"/>
+      </sca:service>
+    </sca:component>
+    <sca:reference name="DataVirtService" multiplicity="0..1" promote="ProxyServiceBean/DataVirtService">
+      <sca:interface.java interface="com.example.switchyard.restproxy.services.ProxyService"/>
+      <http:binding.http name="http_reference">
+        <http:address>http://95.138.170.205:8080/odata/EmployeePeopleVDB2</http:address>
+        <http:basic>
+          <http:user>user</http:user>
+          <http:password>user</http:password>
+        </http:basic>
+      </http:binding.http>
+    </sca:reference>
+    <sca:service name="ProxyService" promote="ProxyServiceBean/ProxyService">
+      <sca:interface.java interface="com.example.switchyard.restproxy.services.ProxyService"/>
+      <http:binding.http name="employee_people">
+        <sy:operationSelector operationName="employeePeople"/>
+        <http:messageComposer class="com.example.switchyard.restproxy.mapper.CustomHttpMessageComposer"/>
+        <http:contextPath>odata/EmployeePeopleVDB2/EmployeePeople</http:contextPath>
+      </http:binding.http>
+      <http:binding.http name="people_union">
+        <sy:operationSelector operationName="peopleUnion"/>
+        <http:messageComposer class="com.example.switchyard.restproxy.mapper.CustomHttpMessageComposer"/>
+        <http:contextPath>odata/EmployeePeopleVDB2/People_union</http:contextPath>
+      </http:binding.http>
+      <http:binding.http name="inc">
+        <sy:operationSelector operationName="inc"/>
+        <http:messageComposer class="com.example.switchyard.restproxy.mapper.CustomHttpMessageComposer"/>
+        <http:contextPath>odata/EmployeePeopleVDB2/inc</http:contextPath>
+      </http:binding.http>
+    </sca:service>
+    <sca:component name="EmployeeServiceBean">
+      <bean:implementation.bean class="com.example.switchyard.restproxy.rest.services.impl.EmployeeServiceBean"/>
+      <sca:service name="EmployeeService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
+      </sca:service>
+      <sca:reference name="ExternalEmployeeService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
+      </sca:reference>
+    </sca:component>
+    <sca:service name="EmployeeService" promote="EmployeeServiceBean/EmployeeService">
+      <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
+      <resteasy:binding.rest name="rest1">
+        <resteasy:messageComposer class="com.example.switchyard.restproxy.mapper.CustomRestComposer"/>
+        <resteasy:interfaces>com.example.switchyard.restproxy.rest.services.EmployeeResource</resteasy:interfaces>
+        <resteasy:contextPath>employee</resteasy:contextPath>
+      </resteasy:binding.rest>
+    </sca:service>
+    <sca:component name="MockEmployeeServiceBean">
+      <bean:implementation.bean class="com.example.switchyard.restproxy.rest.services.impl.MockEmployeeServiceBean"/>
+      <sca:service name="MockEmployeeService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="MockEmployeeService" promote="MockEmployeeServiceBean/MockEmployeeService">
+      <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
+      <resteasy:binding.rest name="rest1">
+        <resteasy:interfaces>com.example.switchyard.restproxy.rest.services.EmployeeResource</resteasy:interfaces>
+        <resteasy:contextPath>mock-employee</resteasy:contextPath>
+      </resteasy:binding.rest>
+    </sca:service>
+    <sca:reference name="ExternalEmployeeService" multiplicity="0..1" promote="EmployeeServiceBean/ExternalEmployeeService">
+      <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
+      <resteasy:binding.rest name="rest1">
+        <resteasy:interfaces>com.example.switchyard.restproxy.rest.services.EmployeeResource</resteasy:interfaces>
+        <resteasy:address>http://localhost:8080/mock-employee</resteasy:address>
+      </resteasy:binding.rest>
+    </sca:reference>
+  </sca:composite>
+</sy:switchyard>

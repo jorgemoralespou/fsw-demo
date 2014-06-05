@@ -1,0 +1,11 @@
+package com.example.switchyard.restproxy.services
+import org.switchyard.Message
+global Message message
+
+rule "RulesComponent"
+    when
+        // insert conditional here
+    then
+        // insert consequence here
+        System.out.println("service: AccessValidationRulesService, payload: " + message.getContent());
+end
