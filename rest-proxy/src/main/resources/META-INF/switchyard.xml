@@ -41,7 +41,7 @@
     <sca:reference name="DataVirtService" multiplicity="0..1" promote="ProxyServiceBean/DataVirtService">
       <sca:interface.java interface="com.example.switchyard.restproxy.services.ProxyService"/>
       <http:binding.http name="http_reference">
-        <http:address>http://95.138.170.205:8080/odata/EmployeePeopleVDB2</http:address>
+        <http:address>http://${externalUrl}/odata/EmployeePeopleVDB2?$format=json</http:address>
         <http:basic>
           <http:user>user</http:user>
           <http:password>user</http:password>
@@ -110,6 +110,7 @@
   <sy:domain>
     <sy:properties>
       <sy:property name="org.switchyard.handlers.messageTrace.enabled" value="true"/>
+      <sy:property name="externalUrl" value="95.138.170.205:8080"/>
     </sy:properties>
   </sy:domain>
 </sy:switchyard>
