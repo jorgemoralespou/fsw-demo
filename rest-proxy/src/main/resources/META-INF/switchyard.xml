@@ -20,6 +20,19 @@
             <rules:resource location="RulesComponent.drl" type="DRL"/>
           </rules:resources>
         </rules:manifest>
+        <rules:operations>
+          <rules:operation name="isValid" type="EXECUTE">
+            <rules:inputs>
+              <rules:input from="message.content" to="user"/>
+            </rules:inputs>
+            <rules:outputs>
+              <rules:output from="globals.Result" to="message.content"/>
+            </rules:outputs>
+            <rules:faults>
+              <rules:fault from="globals.Result" to="message.content"/>
+            </rules:faults>
+          </rules:operation>
+        </rules:operations>
       </rules:implementation.rules>
       <sca:service name="AccessValidationRulesService">
         <sca:interface.java interface="com.example.switchyard.restproxy.services.AccessValidationRulesService"/>
@@ -61,6 +74,9 @@
       <sca:reference name="ExternalEmployeeService">
         <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
       </sca:reference>
+      <sca:reference name="AccessValidationRulesService">
+        <sca:interface.java interface="com.example.switchyard.restproxy.services.AccessValidationRulesService"/>
+      </sca:reference>
     </sca:component>
     <sca:service name="EmployeeService" promote="EmployeeServiceBean/EmployeeService">
       <sca:interface.java interface="com.example.switchyard.restproxy.rest.services.EmployeeService"/>
@@ -91,4 +107,9 @@
       </resteasy:binding.rest>
     </sca:reference>
   </sca:composite>
+  <sy:domain>
+    <sy:properties>
+      <sy:property name="org.switchyard.handlers.messageTrace.enabled" value="true"/>
+    </sy:properties>
+  </sy:domain>
 </sy:switchyard>

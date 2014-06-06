@@ -11,15 +11,16 @@ import org.switchyard.security.context.SecurityContext;
 import org.switchyard.security.credential.NameCredential;
 
 import com.example.switchyard.restproxy.mapper.CustomHttpMessageComposer;
+import com.example.switchyard.restproxy.rest.model.UserIdentity;
 import com.example.switchyard.restproxy.services.AccessValidationRulesService;
 import com.example.switchyard.restproxy.services.ProxyService;
 
 @Service(ProxyService.class)
 public class ProxyServiceBean implements ProxyService {
 
-	// @Inject @Reference
-	// private AccessValidationRules rulez;
-	private AccessValidationRulesService rulez = new MockRulez();
+	@Inject @Reference
+	private AccessValidationRulesService rulez;
+	//private AccessValidationRulesService rulez = new MockRulez();
 
 	@Inject
 	@Reference("DataVirtService")
@@ -27,26 +28,36 @@ public class ProxyServiceBean implements ProxyService {
 
 	@Override
 	public String employeePeople(String content) {
+		System.out.println("ProxyServiceBean.employeePeople");
 		getUsernameFromContext();
-		if (rulez.isValid(username)) {
-
-			System.out.println("Content: " + content);
-			String ret = "ERROR";
-			try {
-				ret = proxy.employeePeople(content);
-			} catch (Exception e) {
-				e.printStackTrace();
+		UserIdentity user = new UserIdentity(username, "admin");
+		System.out.println("Calling rules for: " + user);
+		try{
+			if (rulez.validate(user).isValid()) {
+	
+				System.out.println("Content: " + content);
+				String ret = "ERROR";
+				try {
+					ret = proxy.employeePeople(content);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return ret;
+			} else {
+				return CustomHttpMessageComposer.UNAUTHORIZED;
 			}
-			return ret;
-		} else {
-			return CustomHttpMessageComposer.UNAUTHORIZED;
+		}catch(Throwable t){
+			System.out.println("Error while validating user");
+			t.printStackTrace();
+			return CustomHttpMessageComposer.NOT_FOUND;
 		}
 	}
 
 	@Override
 	public String peopleUnion(String content) {
 		getUsernameFromContext();
-		if (rulez.isValid(username)) {
+		UserIdentity user = new UserIdentity(username, "admin");
+		if (rulez.validate(user).isValid()) {
 
 			System.out.println("Content: " + content);
 			String ret = "ERROR";
@@ -67,7 +78,8 @@ public class ProxyServiceBean implements ProxyService {
 	@Override
 	public String inc(String content) {
 		getUsernameFromContext();
-		if (rulez.isValid(username)) {
+		UserIdentity user = new UserIdentity(username, "admin");
+		if (rulez.validate(user).isValid()) {
 
 			System.out.println("Content: " + content);
 			String ret = "ERROR";

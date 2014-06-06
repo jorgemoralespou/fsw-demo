@@ -13,16 +13,16 @@ import org.switchyard.security.credential.NameCredential;
 
 import com.example.switchyard.restproxy.exceptions.UnauthorizedException;
 import com.example.switchyard.restproxy.rest.model.Employee;
+import com.example.switchyard.restproxy.rest.model.UserIdentity;
 import com.example.switchyard.restproxy.rest.services.EmployeeService;
 import com.example.switchyard.restproxy.services.AccessValidationRulesService;
-import com.example.switchyard.restproxy.services.impl.MockRulez;
 
 @Service(name = "EmployeeService", value = EmployeeService.class)
 public class EmployeeServiceBean implements EmployeeService {
 
-	// @Inject @Reference
-	// private AccessValidationRules rulez;
-	private AccessValidationRulesService rulez = new MockRulez();
+	@Inject @Reference
+	private AccessValidationRulesService rulez;
+//	private AccessValidationRulesService rulez = new MockRulez();
 
 	@Inject
 	@Reference("ExternalEmployeeService")
@@ -33,7 +33,8 @@ public class EmployeeServiceBean implements EmployeeService {
 		System.out.println("EmployeeServiceBean.newEmployee");
 		getUsernameFromContext();
 
-		if (rulez.isValid(username)) {
+		UserIdentity user = new UserIdentity(username, "admin");
+		if (rulez.validate(user).isValid()) {
 			return externalService.newEmployee();
 		} else {
 			throw new UnauthorizedException("UNAUTHORIZED");
@@ -45,7 +46,8 @@ public class EmployeeServiceBean implements EmployeeService {
 		System.out.println("EmployeeServiceBean.getEmployee");
 		getUsernameFromContext();
 
-		if (rulez.isValid(username)) {
+		UserIdentity user = new UserIdentity(username, "admin");
+		if (rulez.validate(user).isValid()) {
 			return externalService.getEmployee(employeeId);
 		} else {
 			throw new UnauthorizedException("UNAUTHORIZED");
@@ -57,7 +59,8 @@ public class EmployeeServiceBean implements EmployeeService {
 		System.out.println("EmployeeServiceBean.removeEmployee");
 		getUsernameFromContext();
 
-		if (rulez.isValid(username)) {
+		UserIdentity user = new UserIdentity(username, "admin");
+		if (rulez.validate(user).isValid()) {
 			return externalService.removeEmployee(employeeId);
 		} else {
 			throw new UnauthorizedException("UNAUTHORIZED");
@@ -69,7 +72,8 @@ public class EmployeeServiceBean implements EmployeeService {
 		System.out.println("EmployeeServiceBean.getEmployees");
 		getUsernameFromContext();
 
-		if (rulez.isValid(username)) {
+		UserIdentity user = new UserIdentity(username, "admin");
+		if (rulez.validate(user).isValid()) {
 			return externalService.getEmployees();
 		} else {
 			throw new UnauthorizedException("UNAUTHORIZED");

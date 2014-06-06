@@ -1,11 +1,26 @@
 package com.example.switchyard.restproxy.services
-import org.switchyard.Message
-global Message message
+import com.example.switchyard.restproxy.rest.model.UserIdentity
 
-rule "RulesComponent"
+global java.util.Map globals
+
+rule "AccessValid"
     when
         // insert conditional here
+        username: UserIdentity(username == "userA")
     then
         // insert consequence here
-        System.out.println("service: AccessValidationRulesService, payload: " + message.getContent());
+        System.out.println("User is valid");
+        username.setValid(true);
+        globals.put("Result", username);
+end
+
+rule "AccessInvalid"
+    when
+        // insert conditional here
+        username: UserIdentity(username != "userA")
+    then
+        // insert consequence here
+        System.out.println("User is not valid");
+        username.setValid(false);
+        globals.put("Result", username);
 end

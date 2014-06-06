@@ -1,15 +1,17 @@
 package com.example.switchyard.restproxy.services.impl;
 
+import com.example.switchyard.restproxy.rest.model.UserIdentity;
 import com.example.switchyard.restproxy.services.AccessValidationRulesService;
 
 public class MockRulez implements AccessValidationRulesService {
 
 	@Override
-	public boolean isValid(String username) {
-		if ("userA".equals(username) || "viewerA".equals(username)) {
-			return true;
+	public UserIdentity validate(UserIdentity username) {
+		if ("userA".equals(username.getUsername()) || "viewerA".equals(username.getUsername())) {
+			username.setValid(true);
 		} else {
-			return false;
+			username.setValid(false);
 		}
+		return username;
 	}
 }
