@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:file="urn:switchyard-component-camel-file:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="file-streaming" targetNamespace="urn:com.example.switchyard:file-streaming:1.0">
+  <sca:composite name="file-streaming" targetNamespace="urn:com.example.switchyard:file-streaming:1.0">
+    <sca:component name="CamelServiceRoute">
+      <camel:implementation.camel>
+        <camel:java class="com.example.switchyard.file_streaming.CamelServiceRoute"/>
+      </camel:implementation.camel>
+      <sca:service name="ReadFileService">
+        <sy:interface.esb inputType="java:java.io.InputStream"/>
+      </sca:service>
+      <sca:reference name="FileWriteService">
+        <sy:interface.esb inputType="java:java.io.InputStream"/>
+      </sca:reference>
+    </sca:component>
+    <sca:service name="ReadFileService" promote="CamelServiceRoute/ReadFileService">
+      <sy:interface.esb inputType="java:java.io.InputStream"/>
+      <file:binding.file name="file1">
+        <file:directory>/input</file:directory>
+        <file:fileName>test.txt</file:fileName>
+        <file:consume>
+          <file:delay>5000</file:delay>
+        </file:consume>
+      </file:binding.file>
+    </sca:service>
+    <sca:reference name="FileWriteService" multiplicity="0..1" promote="CamelServiceRoute/FileWriteService">
+      <sy:interface.esb inputType="java:java.io.InputStream"/>
+      <file:binding.file name="file1">
+        <file:directory>/output</file:directory>
+        <file:produce/>
+      </file:binding.file>
+    </sca:reference>
+    <sca:component name="CamelServiceRouteWithString">
+      <camel:implementation.camel>
+        <camel:java class="com.example.switchyard.file_streaming.CamelServiceRouteWithString"/>
+      </camel:implementation.camel>
+      <sca:service name="FileReadServiceAsString">
+        <sy:interface.esb inputType="java:java.lang.String"/>
+      </sca:service>
+      <sca:reference name="FileWriteServiceAsString">
+        <sy:interface.esb inputType="java:java.lang.String"/>
+      </sca:reference>
+    </sca:component>
+    <sca:reference name="FileWriteServiceAsString" multiplicity="0..1" promote="CamelServiceRouteWithString/FileWriteServiceAsString">
+      <sy:interface.esb inputType="java:java.lang.String"/>
+      <file:binding.file name="file1">
+        <file:directory>/output</file:directory>
+        <file:produce/>
+      </file:binding.file>
+    </sca:reference>
+    <sca:service name="FileReadServiceAsString" promote="CamelServiceRouteWithString/FileReadServiceAsString">
+      <sy:interface.esb inputType="java:java.lang.String"/>
+      <file:binding.file name="file1">
+        <file:directory>/input</file:directory>
+        <file:fileName>string.txt</file:fileName>
+        <file:consume>
+          <file:delay>5000</file:delay>
+        </file:consume>
+      </file:binding.file>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>
