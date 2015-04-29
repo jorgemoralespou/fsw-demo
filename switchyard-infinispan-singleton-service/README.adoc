@@ -1,0 +1,13 @@
+= SwitchYard Infinispan based Singleton Service
+This example shows how to do a service that will use Infinispan to create a lock and avoid execution of trigger based actions (quartz) on multiple nodes at the same time.
+
+To try it, you just need 2 switchyard instances running with the -ha.xml profile.
+
+I use docker, so you can easily do.
+
+----
+docker run -dit --net=host --name sy1 jorgemoralespou/switchyard-wildfly-admin -c standalone-ha.xml -Djboss.node.name=sy1
+docker run -dit --net=host --name sy2 jorgemoralespou/switchyard-wildfly-admin -c standalone-ha.xml -Djboss.node.name=sy2 -Djboss.socket.binding.port-offset=100
+----
+
+The images I use are based on jboss/switchyard-wildfly but with administration user enabled, to deploy apps.

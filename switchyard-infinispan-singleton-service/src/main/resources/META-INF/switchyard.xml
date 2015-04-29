@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:quartz="urn:switchyard-component-camel-quartz:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="switchyard-infinispan-service" targetNamespace="urn:com.example.switchyard:switchyard-infinispan-service:1.0">
+  <sca:composite name="switchyard-infinispan-service" targetNamespace="urn:com.example.switchyard:switchyard-infinispan-service:1.0">
+    <sca:component name="CacheManagerBean">
+      <bean:implementation.bean class="com.example.switchyard.switchyard_infinispan_service.CacheManagerBean"/>
+      <sca:service name="CacheManager">
+        <sca:interface.java interface="com.example.switchyard.switchyard_infinispan_service.CacheManager"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="CacheManager" promote="CacheManagerBean/CacheManager">
+      <sca:interface.java interface="com.example.switchyard.switchyard_infinispan_service.CacheManager"/>
+      <quartz:binding.quartz name="CacheManager1">
+        <sy:operationSelector operationName="add"/>
+        <quartz:name>CacheManager1</quartz:name>
+        <quartz:cron>0/20 * * * * ?</quartz:cron>
+      </quartz:binding.quartz>
+      <quartz:binding.quartz name="CacheManager2">
+        <sy:operationSelector operationName="print"/>
+        <quartz:name>CacheManager2</quartz:name>
+        <quartz:cron>0/5 * * * * ?</quartz:cron>
+      </quartz:binding.quartz>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>
