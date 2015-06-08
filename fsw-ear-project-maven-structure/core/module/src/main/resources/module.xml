@@ -1,0 +1,12 @@
+<module xmlns="urn:jboss:module:1.0" name="com.example.fsw.core">
+  <resources>
+    <resource-root path="beans.jar"/>
+    <resource-root path="common.jar"/>
+  </resources>
+
+<!--    ADD ALL THE DEPENDENCIES THE MODULE HAS
+  <dependencies>
+    <module name="javax.api"/>
+  </dependencies>
+-->  
+</module>
