@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+<!-- 
+   <deployment>
+      <dependencies>
+         <module name="com.example.fsw.core" />
+         <module name="deployment.beans-1.0.0-SNAPSHOT.jar"/>
+      </dependencies>
+   </deployment>
+ -->
+</jboss-deployment-structure>

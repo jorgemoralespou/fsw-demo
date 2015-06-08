@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+   <ear-subdeployments-isolated>true</ear-subdeployments-isolated>
+   <deployment>
+      <!-- Customize dependencies 
+      <dependencies> 
+      </dependencies> 
+      -->
+   </deployment>
+   <!-- Files in /lib are added to every subdeployment. Just customize dependencies 
+      required for each subdpeloyment -->
+   <!-- Switchyard applications -->
+   <sub-deployment name="compositeX.jar" />
+   <sub-deployment name="compositeY.jar" />
+</jboss-deployment-structure>

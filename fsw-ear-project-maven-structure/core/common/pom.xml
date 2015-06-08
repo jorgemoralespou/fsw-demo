@@ -7,4 +7,11 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>common</artifactId>
+    <dependencies>
+    	<dependency>
+    		<groupId>com.example.fsw.core</groupId>
+    		<artifactId>beans</artifactId>
+    		<scope>provided</scope>
+    	</dependency>
+    </dependencies>
 </project>

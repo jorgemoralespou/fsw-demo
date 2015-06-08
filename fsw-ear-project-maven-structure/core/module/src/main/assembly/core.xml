@@ -9,7 +9,7 @@
    <baseDirectory>/</baseDirectory>
    <dependencySets>
       <dependencySet>
-         <outputDirectory>modules/com/example/fsw/main</outputDirectory>
+         <outputDirectory>modules/com/example/fsw/core/main</outputDirectory>
          <useProjectArtifact>false</useProjectArtifact>
          <useTransitiveDependencies>false</useTransitiveDependencies>
          <includes>
@@ -22,7 +22,7 @@
    <fileSets>
       <fileSet>
          <directory>src/main/resources</directory>
-         <outputDirectory>modules/com/example/fsw/main</outputDirectory>
+         <outputDirectory>modules/com/example/fsw/core/main</outputDirectory>
       </fileSet>
    </fileSets>
 </assembly>

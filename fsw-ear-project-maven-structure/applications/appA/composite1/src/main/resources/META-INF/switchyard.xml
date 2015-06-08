@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:camel="urn:switchyard-component-camel:config:1.1" xmlns:quartz="urn:switchyard-component-camel-quartz:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="composite1" targetNamespace="urn:com.example.fsw.applications.appA:composite1:1.0.0">
+  <sca:composite name="composite1" targetNamespace="urn:com.example.fsw.applications.appA:composite1:1.0.0">
+    <sca:component name="TriggeredServiceBean">
+      <bean:implementation.bean class="com.example.fsw.applications.appA.TriggeredServiceBean"/>
+      <sca:service name="TriggeredService">
+        <sca:interface.java interface="com.example.fsw.applications.appA.TriggeredService"/>
+      </sca:service>
+      <sca:reference name="ExampleService">
+        <sca:interface.java interface="com.example.fsw.interfaces.ExampleService"/>
+      </sca:reference>
+    </sca:component>
+    <sca:service name="ScheduledService" promote="TriggeredServiceBean/TriggeredService">
+      <sy:interface.esb inputType="java:java.lang.String"/>
+      <quartz:binding.quartz name="ScheduledService1">
+        <quartz:name>ScheduledService1</quartz:name>
+        <quartz:cron>0/10 * * * * ?</quartz:cron>
+      </quartz:binding.quartz>
+    </sca:service>
+    <sca:reference name="ExampleServiceReference" multiplicity="0..1" promote="TriggeredServiceBean/ExampleService">
+      <sy:interface.esb inputType="java:com.example.fsw.beans.Request" outputType="java:com.example.fsw.beans.Response"/>
+      <sca:binding.sca sy:targetNamespace="urn:com.example.fsw.applications.appA:composite2:1.0.0" sy:target="ExampleService" name="sca1"/>
+    </sca:reference>
+  </sca:composite>
+</sy:switchyard>

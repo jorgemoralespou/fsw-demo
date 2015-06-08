@@ -24,7 +24,9 @@
          <useTransitiveDependencies>false</useTransitiveDependencies>
          <includes>
                 <include>com.example.fsw.applications.appA:appA:ear</include>
+                <!-- 
                 <include>com.example.fsw.applications.appB:appB:ear</include>
+                 -->
          </includes>
          <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
       </dependencySet>

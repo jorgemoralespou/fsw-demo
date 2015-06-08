@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+   <ear-subdeployments-isolated>true</ear-subdeployments-isolated>
+   <deployment>
+      <dependencies>
+         <module name="com.example.fsw.core" />
+      </dependencies>
+   </deployment>
+   <sub-deployment name="composite1.jar">
+      <dependencies>
+         <module name="com.example.fsw.core" />
+      </dependencies>
+   </sub-deployment>
+   <sub-deployment name="composite2.jar">
+      <dependencies>
+         <module name="com.example.fsw.core" />
+      </dependencies>
+   </sub-deployment>
+</jboss-deployment-structure>
