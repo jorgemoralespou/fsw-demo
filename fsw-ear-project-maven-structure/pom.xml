@@ -30,6 +30,12 @@
         <type>ear</type>
     </dependency>
     <dependency>
+        <groupId>com.example.fsw.applications.appB</groupId>
+        <artifactId>appB</artifactId>
+         <version>${project.version}</version>
+        <type>ear</type>
+    </dependency>
+    <dependency>
         <groupId>com.example.fsw.core</groupId>
         <artifactId>module</artifactId>
          <version>${project.version}</version>
